@@ -5,14 +5,13 @@
 # Written by Sergey Karayev
 # --------------------------------------------------------
 
-cimport cython
+#import cython
 import numpy as np
-cimport numpy as np
 
 
 def compute_overlap(
-    np.ndarray[double, ndim=2] boxes,
-    np.ndarray[double, ndim=2] query_boxes
+    boxes,
+    query_boxes
 ):
     """
     Args
@@ -22,12 +21,9 @@ def compute_overlap(
     Returns
         overlaps: (N, K) ndarray of overlap between boxes and query_boxes
     """
-    cdef unsigned int N = boxes.shape[0]
-    cdef unsigned int K = query_boxes.shape[0]
-    cdef np.ndarray[double, ndim=2] overlaps = np.zeros((N, K), dtype=np.float64)
-    cdef double iw, ih, box_area
-    cdef double ua
-    cdef unsigned int k, n
+    N = boxes.shape[0]
+    K = query_boxes.shape[0]
+    overlaps = np.zeros((N, K), dtype=np.float64)
     for k in range(K):
         box_area = (
             (query_boxes[k, 2] - query_boxes[k, 0] + 1) *
